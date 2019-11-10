@@ -92,10 +92,11 @@ class ProductController extends Controller
         $request['detail'] = $request->description;
         unset($request['description']);
         $product->update($request->all());
-        return ([
+        return \response([
             'data' => new ProductResource($product)
-        ]);
+        ], \Symfony\Component\HttpFoundation\Response::HTTP_CREATED);
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -105,6 +106,7 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        return \response(null, \Symfony\Component\HttpFoundation\Response::HTTP_NO_CONTENT);
     }
 }
